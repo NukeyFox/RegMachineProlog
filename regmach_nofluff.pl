@@ -9,10 +9,17 @@ dec_op([N|T],0,[M|T], L1, _, L1) :- N > 0, M is N-1.
 dec_op([H|T],N,[H|U], L1, L2, X) :- M is N-1, dec_op(T,M,U,L1,L2,X).
 
 nextConfig(L, R, P, L1, R2) :-  nth(inc(I, L1), L, P), inc_op(R, I, R2).                  
-nextConfig(L, R, P, NL, R2) :-  nth(dec(I, L1, L2), L, P), dec_op(R, I, R2, L1, L2, NL).  
+nextConfig(L, R, P, NL, R2) :-  nth(dec(I, L1, L2), L, P), dec_op(R, I, R2, L1, L2, NL). 
 
 step(L, R, P, R) :- nth(hALT, L, P).      
 step(L, R, P, R) :- length(P,X), L >= X.  
 step(L, R, P, R2) :- nextConfig(L, R, P, L1, R1), !, step(L1, R1, P, R2).
 
-compute(R, P, R1) :- step(0, R, P, R1).
+compute(Reg, Prog, Out) :- step(0, Reg, Prog, Out).
+
+getLines(Filename, L):- setup_call_cleanup(open(Filename, read, In), readData(In, L), close(In)).
+readData(In, L):-
+    read_term(In, H, []),
+    ( H == end_of_file ->  L = [];
+      L = [H|T], readData(In,T)).
+computeFromFile(Filename, Reg, Out) :- getLines(Filename, Prog), compute(Reg, Prog, Out). 
