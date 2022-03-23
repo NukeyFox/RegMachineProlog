@@ -26,7 +26,7 @@ step(L, R, P, R2) :- nextConfig(L, R, P, L1, R1), !, step(L1, R1, P, R2).
 compute(R, P, R1) :- step(0, R, P, R1).
 
 % Try out these queries:
-% 1. incition (0,x,y) -> (x+y,0,0)
+% 1. addition (0,x,y) -> (x+y,0,0)
 %       compute([0,3,2],[dec(1,1,2), inc(0,0), dec(2,3,4), inc(0,2),hALT],X).
 % 2. Truncated dectraction (0,x,y) -> (x-y,0,0)
 %       compute([0,19,4],[dec(1,1,2),inc(0,0),dec(2,3,4),dec(0,2,4),hALT],X).
