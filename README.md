@@ -20,5 +20,5 @@ inc(0,2).
 hALT.
 ```
 
-You can *try* to search for programs (`compute([0,1], X, [1,0])`) but its almost guaranteed to crash or loop forever. 
+You can *try* to search for programs (e.g. `compute([0,1], X, [1,0])`) but its almost guaranteed to crash or loop forever. 
 
