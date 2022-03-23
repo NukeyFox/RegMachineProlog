@@ -23,12 +23,26 @@ step(L, R, P, R) :- length(P,X), L >= X.  % For erroneous halts.
 step(L, R, P, R2) :- nextConfig(L, R, P, L1, R1), !, step(L1, R1, P, R2).
 
 %compute(Reg, Prog, ResReg) succeeds if ResReg is the final configuration on running program Prog on initial registers Reg (basicall a wrapper for step)
-compute(R, P, R1) :- step(0, R, P, R1).
+compute(Reg, Prog, Out) :- step(0, Reg, Prog, Out).
+
+%Im not strong enough to explain Prolog I/O...
+getLines(Filename, L):- setup_call_cleanup(open(Filename, read, In), readData(In, L), close(In)).
+readData(In, L):-
+    read_term(In, H, []),
+    (  H == end_of_file ->  L = [];
+       L = [H|T], readData(In,T)).
+computeFromFile(Filename, Reg, Out) :- getLines(Filename, Prog), compute(Reg, Prog, Out). 
 
 % Try out these queries:
+%
 % 1. addition (0,x,y) -> (x+y,0,0)
-%       compute([0,3,2],[dec(1,1,2), inc(0,0), dec(2,3,4), inc(0,2),hALT],X).
-% 2. Truncated dectraction (0,x,y) -> (x-y,0,0)
-%       compute([0,19,4],[dec(1,1,2),inc(0,0),dec(2,3,4),dec(0,2,4),hALT],X).
+%       - computeFromFile('./programs/addition.pl', [0,3,2], X). 
+%       - compute([0,3,2],[dec(1,1,2), inc(0,0), dec(2,3,4), inc(0,2),hALT],X).
+%
+% 2. Truncated subtraction (0,x,y) -> (x-y,0,0)
+%       - computeFromFile('./programs/truncsub.pl', [0,19,4], X). 
+%       - compute([0,19,4],[dec(1,1,2),inc(0,0),dec(2,3,4),dec(0,2,4),hALT],X).
+%
 % 3. Power of 2 (0,x,0) -> (2^x,0,0)
-%       compute([0,8,0],[inc(0,1),dec(1,2,7),dec(0,3,5),inc(2,4),inc(2,2),dec(2,6,1),inc(0,5),hALT],X)
+%       - computeFromFile('./programs/poweroftwo.pl', [0,8,0], X).
+%       - compute([0,8,0],[inc(0,1),dec(1,2,7),dec(0,3,5),inc(2,4),inc(2,2),dec(2,6,1),inc(0,5),hALT],X)
