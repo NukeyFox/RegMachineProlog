@@ -1,4 +1,4 @@
-nth(X,0,[X|_]).
+nth(X,0,[X|_]). 
 nth(X,N,[_|T]) :- M is N-1, nth(X,M,T).
 
 inc_op([N|T],0,[M|T]) :- M is N+1.
