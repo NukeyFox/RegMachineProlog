@@ -1,6 +1,6 @@
 Usage:
 
-?- `compute(Registers, Prolog, Output).`
+?- `compute(Registers, Program, Output).`
 
 ?- `computeFromFile(Filename, Registers, Output).`
 
