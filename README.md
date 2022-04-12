@@ -1,3 +1,5 @@
+### Register machine interpreter implementation in Prolog
+
 Usage:
 
 ?- `compute(Registers, Program, Output).`
