@@ -8,7 +8,7 @@ Usage:
 
 Instructions clauses come in three flavours:
 - `inc(R, L)`          = increment register R's content and jump to instruction labelled L
-- `dec(R, L1, L2)`     = if register R > 0, decrement R's contents and jump to instruction labelled L2, 
+- `dec(R, L1, L2)`     = if register R > 0, decrement R's contents and jump to instruction labelled L1, 
                         or if R == 0, jump to instruction labelled L2
 - `hALT`               = halts the program. ( halt is a keyword in Prolog so I couldn't use it :C )
 
